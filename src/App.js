@@ -6,11 +6,15 @@ import { createStore } from 'redux';
 
 import reducers from './reducers/index';
 import { Header } from './components/common';
+import LibralyList from './components/LibraryList';
 
 const App = () => {
   return (
     <Provider store={ createStore(reducers) }>
-      <Header headerText = "Tech Stack"/>
+      <View style = { {flex: 1} }>
+        <Header headerText = "Tech Stack"/>
+        <LibralyList/>
+      </View>
     </Provider>
   )
 };

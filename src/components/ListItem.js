@@ -5,9 +5,12 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { CardSection } from './common/CardSection'
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 
 class ListItem extends Component {
   render() {
+    console.log(this.props);
     return (
       <CardSection>
         <Text style = { styles.titleTextStyle }> { this.props.library.title }</Text>
@@ -23,5 +26,5 @@ const styles = {
   }
 };
 
-export  default ListItem;
+export  default connect(null, actions)(ListItem);
 

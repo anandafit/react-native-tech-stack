@@ -3,18 +3,37 @@
  */
 
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableWithoutFeedback, View, LayoutAnimation } from 'react-native';
 import { CardSection } from './common/CardSection'
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 
 class ListItem extends Component {
+  componentWillUpdate() {
+    LayoutAnimation.spring();
+  }
+
+  renderDescription() {
+    if (this.props.library.id === this.props.selectedLibraryId){
+      return(
+        <CardSection><Text style = { { flex: 1}}> {this.props.library.description} </Text></CardSection>
+      )
+    }
+  }
+
   render() {
-    console.log(this.props);
+    console.log(this.props.library.id);
+    const { id, title } = this.props.library;
     return (
-      <CardSection>
-        <Text style = { styles.titleTextStyle }> { this.props.library.title }</Text>
-      </CardSection>
+      <TouchableWithoutFeedback onPress = { () => this.props.selectLibrary(id)}>
+        <View>
+          <CardSection>
+            <Text style = { styles.titleTextStyle }> { title }</Text>
+          </CardSection>
+          {this.renderDescription()}
+        </View>
+      </TouchableWithoutFeedback>
+
     )
   }
 }
@@ -26,5 +45,8 @@ const styles = {
   }
 };
 
-export  default connect(null, actions)(ListItem);
+const mapStateToProps = state => {
+  return { selectedLibraryId : state.selectedLibraryId}
+};
+export  default connect(mapStateToProps, actions)(ListItem);
 
